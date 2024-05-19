@@ -9,8 +9,12 @@ class AppModel {
   }
 
   async findById(id, conditions = null) {
-    const res = await pb.collection(this.collection).getOne(id, conditions);
-    return res;
+    try {
+      const res = await pb.collection(this.collection).getOne(id, conditions);
+      return res;
+    } catch (error) {
+      return error;
+    }
   }
 
   async findAll(conditions = null) {
@@ -22,10 +26,14 @@ class AppModel {
 
   async findPaginated(limit, conditions = null) {
     limit = limit ?? 10;
-    const res = await pb
-      .collection(this.collection)
-      .getList(1, limit, conditions);
-    return res;
+    try {
+      const res = await pb
+        .collection(this.collection)
+        .getList(1, limit, conditions);
+      return res;
+    } catch (error) {
+      return error;
+    }
   }
 
   async save(data) {
